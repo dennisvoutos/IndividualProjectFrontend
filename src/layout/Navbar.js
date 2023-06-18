@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link} from "react-router-dom";
 export default function Navbar() {
   return (
     <div>
@@ -19,8 +19,18 @@ export default function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-
-          <button className="btn btn-outline-light"> Add User</button>
+          <div>
+            <ul>
+              <li>
+                <Link to = "/login">Log in</Link>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <Link to = "/signup">Sign up</Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </div>
