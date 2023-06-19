@@ -26,7 +26,7 @@ function RecipesView(props) {
                 ))}
             </ul>
           </div>
-          <Link to ={"/app"}>Back</Link>
+          <Link to ={"/"}>Back</Link>
         </div>
         
       )

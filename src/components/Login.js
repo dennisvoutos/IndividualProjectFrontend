@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const initialState = {
     username:"",
@@ -10,6 +10,13 @@ function Login(props) {
     const navigate = useNavigate();
     const [form,setForm] = useState(initialState);
     const [users,setUsers] = useState([])
+    useEffect(() => {
+      fetch("http://localhost:4000/users")
+        .then((res) => res.json())
+        .then((data) => {
+          setUsers(data);
+        });
+    }, []);
     const clearForm = (e) =>{
         setForm({
             username:"",
@@ -20,15 +27,13 @@ function Login(props) {
     const handleSubmit = async (e) =>{
         //when login is happening, we get the data from the server and check to see if the user is in there.
         e.preventDefault();
-        const res = await fetch("http://localhost:4000/users")
-        .then((res) => res.json())
-        .then((data) => setUsers(data));
-        for(temp in users){
-            if(temp.email === form.email && temp.password === form.password){
+        for(let temp in users){
+            if(temp.email == form.email && temp.password == form.password){
                 setUser(temp);
                 navigate("/")
             }
         }
+        alert("User credentials are wrong")
     }
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: [e.target.value] });
@@ -56,7 +61,7 @@ function Login(props) {
       />
       <div className="actions-section">
         <button className="button blue" type="submit">
-          Sign up
+          Log in
         </button>
         <button className="ClearButton" onClick={clearForm}>
           Clear data

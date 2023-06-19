@@ -2,14 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import "./styles/styles.css";
 import "./styles/mine.css";
-import Navbar from "./Navbar";
-import Login from "./project_components/Login";
-import Signup from "./project_components/Signup";
-import RecipesAdd from "./project_components/RecipesAdd";
-import RecipesEdit from "./project_components/RecipesEdit";
-import Home from "./project_components/Home";
-import RecipesView from "./project_components/RecipesView";
-import MyRecipes from "./project_components/MyRecipes";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import RecipesAdd from "./components/RecipesAdd";
+import RecipesEdit from "./components/RecipesEdit";
+import Home from "./components/Home";
+import RecipesView from "./components/RecipesView";
+import MyRecipes from "./components/MyRecipes";
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -32,7 +31,7 @@ export default function App() {
         <div>
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <div className="container-fluid">
-              <a className="navbar-brand" href="#">
+              <a className="navbar-brand" >
                 Full stack application for BooleanUK
               </a>
               <button
@@ -70,17 +69,14 @@ export default function App() {
           </nav>
         </div>
         <h2>Menu</h2>
-        if(user!==null)
-        {
+        {user == null ? (
           <ul>
             <Link to="/">
               <li>All recipes</li>
             </Link>
             <li>Please log in or sign up to add a recipe</li>
           </ul>
-        }
-        else
-        {
+        ) : (
           <ul>
             <Link to="/">
               <li>All recipes</li>
@@ -88,11 +84,11 @@ export default function App() {
             <Link to="/recipes/add">
               <li>Add New Recipe</li>
             </Link>
-            <Link to="/recipes/mone">
+            <Link to="/recipes/mine">
               <li>My recipes</li>
             </Link>
           </ul>
-        }
+        )}
       </nav>
       <main>
         {/* funny looking spinner */}
@@ -106,12 +102,16 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home recipes={recipes} setRecipes={setRecipes} user = {user} setUser = {setUser} />}
+            element={
+              <Home
+                recipes={recipes}
+                setRecipes={setRecipes}
+                user={user}
+                setUser={setUser}
+              />
+            }
           />
-          <Route
-            path="/app"
-            element={<App/>}
-          />
+
           <Route path="/recipes/:id" element={<RecipesView />} />
           <Route
             path="/recipes/add"
@@ -119,7 +119,13 @@ export default function App() {
           />
           <Route
             path="/recipes/mine/:id/edit"
-            element={<RecipesEdit recipes={recipes} setRecipes={setRecipes} user = {user}/>}
+            element={
+              <RecipesEdit
+                recipes={recipes}
+                setRecipes={setRecipes}
+                user={user}
+              />
+            }
           />
           <Route
             path="/login"
@@ -131,7 +137,13 @@ export default function App() {
           />
           <Route
             path="/recipes/mine"
-            element={<MyRecipes user={user} setRecipes = {setRecipes}recipes = {recipes}/>}
+            element={
+              <MyRecipes
+                user={user}
+                setRecipes={setRecipes}
+                recipes={recipes}
+              />
+            }
           />
           {/* Above should be the basic routes needed, not including search. */}
         </Routes>

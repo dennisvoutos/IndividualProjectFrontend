@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 // not yet correct. Must use GET to get everything from the server and update the current state of edit.
 
@@ -28,9 +28,9 @@ function RecipesEdit(props) {
 
   const handleAddIngredient = () => {
     const newIngredient = {
-      name: ingredientName,
-      quantity: ingredientQuantity,
-      typeofQuantity: ingredientTypeOfQuantity,
+      name: ingredient.name,
+      quantity: ingredient.quantity,
+      typeofQuantity: ingredient.type,
     };
     //here i have 2 options. post the ingredients in the server and use their id in the POST of the recipe, or try to see if i can post them all together.
     setIngredients([...ingredients, newIngredient]);

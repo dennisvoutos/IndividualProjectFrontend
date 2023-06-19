@@ -15,26 +15,21 @@ function SignUp(props) {
       username: "",
       password: "",
       email: "",
+      id:1
     });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:4000/users", {
+    const res = await fetch("http://localhost:4000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(form),
     });
-    await fetch("http://localhost:4000/users")
-        .then((res) => res.json())
-        .then((data) => setUsers(data));
-        for(temp in users){
-            if(temp.email === form.email && temp.password === form.password){
-                setUser(temp);
-                navigate("/")
-            }
-        }
+    setUser(form)
+    
+    navigate("/")
   };
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: [e.target.value] });
