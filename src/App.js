@@ -113,10 +113,19 @@ export default function App() {
           />
 
           <Route path="/recipes/:id" element={<RecipesView />} />
-          <Route
+          {user===null && (
+            <Route
             path="/recipes/add"
             element={<RecipesAdd user={user} setUser={setUser} setRecipes = {setRecipes}/>}
           />
+          )}
+          {user!==null && (
+            <Route
+            path="/recipes/add"
+            element={<RecipesAdd user={user} setUser={setUser} setRecipes = {setRecipes} id = {user.id}/>}
+          />
+          )}
+          
           <Route
             path="/recipes/mine/:id/edit"
             element={

@@ -30,6 +30,8 @@ export default function Home(props) {
               <th scope="col">Title</th>
               <th scope="col">description</th>
               <th scope="col">ingredients</th>
+              <th scope="col">Creator</th>
+              <th scope="col">View</th>
             </tr>
           </thead>
           <tbody>
@@ -40,7 +42,11 @@ export default function Home(props) {
                 </th>
                 <td>{recipe.title}</td>
                 <td>{recipe.description}</td>
-                <td>{recipe.ingredients}</td>
+                <td>
+                  {recipe.ingredients.map((ingredient)=>(ingredient.quantity + ingredient.type + "of " + ingredient.name))}
+                </td>
+                <td>{recipe.creator.username}</td>
+                <td><Link to ="recipes/:[recipe.id]">View</Link></td>
               </tr>
             ))}
           </tbody>

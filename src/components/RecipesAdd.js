@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-const initialState = {
-  title: "",
-  description: "",
-  userId:0
-};
+
 const initialIngredientState = {
   name: "",
   quantity: "",
   type: "",
+  ingredients:[]
 };
+
 function RecipesAdd(props) {
-  const { recipes, setRecipes,user } = props;
+  const { recipes, setRecipes,id } = props;
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    userId:0,
+    ingredients:[]
+  });
+ 
+ 
   const navigate = useNavigate();
-  const [form, setForm] = useState(initialState);
+
   const [ingredients, setIngredients] = useState([]);
   const [ingredient, setIngredient] = useState(initialIngredientState);
 
   const handleFormChange = (e) => {
-    setForm({ ...form, [e.target.name]: [e.target.value] });
+    setForm({ ...form, [e.target.name]: e.target.value });
     console.log(e);
   };
-  const handleChange = (e) => {};
+  
   const handleIngredientChange = (e) => {
     setIngredient({ ...ingredient, [e.target.name]: e.target.value });
   };
@@ -34,6 +40,10 @@ function RecipesAdd(props) {
     };
     //here i have 2 options. post the ingredients in the server and use their id in the POST of the recipe, or try to see if i can post them all together.
     setIngredients([...ingredients, newIngredient]);
+    setForm((prevForm) => ({
+      ...prevForm,
+      ingredients: [...prevForm.ingredients, newIngredient],
+    }));
     setIngredient({
       name: "",
       quantity: "",
@@ -43,28 +53,32 @@ function RecipesAdd(props) {
   };
 
   const handleSubmit = async (event) => {
-    setForm({...form,userId:user.id})
+    console.log(id);
+    console.log(form.ingredients);
+    setForm(prevForm => ({ ...prevForm, userId: id}));
     console.log(form);
     event.preventDefault();
     // Here you can perform any additional actions, such as submitting the form or displaying a success message
-    alert("Recipe added!");
+    
     const res = fetch("http://localhost:4000/recipes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(form),
-    });
-    // await fetch("http://localhost:4000/recipes")
-    //   .then((res) => res.json)
-    //   .then((data) => setRecipes(data));
-    //refresh all recipes.
+    })
+    .then
+    await fetch("http://localhost:4000/recipes")
+      .then((res) => res.json())
+      .then((data) => setRecipes(data));
+    // refresh all recipes.
+    alert("Recipe added!");
     navigate("/");
   };
 
   return (
     <div>
-      <h1>Create Recipe</h1>
+      <h1>Create Recipe for user {id}</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title:</label>
         <input

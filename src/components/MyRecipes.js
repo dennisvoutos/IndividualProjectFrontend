@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 export default function MyRecipes(props) {
     const {recipes, user, setRecipes } = props;
     const [myRecipes,setMyRecipes] = useState([])
-    useEffect((
-      setMyRecipes(recipes.filter((recipe)=> (recipe.creator.id === user.id)))
-    ),[]);
+    // useEffect((
+    //   setMyRecipes(recipes.filter((recipe)=> (recipe.creator.id === user.id)))
+    // ),[]);
 
     const deleteRecipe = async(e) =>{
         const newRecipes = myRecipes.filter((item) => item.id !== e.target.id);
