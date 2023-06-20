@@ -1,44 +1,46 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const initialState = {
-    username:"",
-    password:"",
-    email:""
-}
+  password: "",
+  email: "",
+};
 function Login(props) {
-    const {user,setUser} = props;
-    const navigate = useNavigate();
-    const [form,setForm] = useState(initialState);
-    const [users,setUsers] = useState([])
-    useEffect(() => {
-      fetch("http://localhost:4000/users")
-        .then((res) => res.json())
-        .then((data) => {
-          setUsers(data);
-        });
-    }, []);
-    const clearForm = (e) =>{
-        setForm({
-            username:"",
-            password:"",
-            email:""
-        });
-    }
-    const handleSubmit = async (e) =>{
-        //when login is happening, we get the data from the server and check to see if the user is in there.
-        e.preventDefault();
-        for(let temp in users){
-            if(temp.email == form.email && temp.password == form.password){
-                setUser(temp);
-                navigate("/")
-            }
+  const { user, setUser } = props;
+  const navigate = useNavigate();
+  const [form, setForm] = useState(initialState);
+  const clearForm = (e) => {
+    setForm({
+      password: "",
+      email: "",
+    });
+  };
+  const handleSubmit = async (e) => {
+    console.log(JSON.stringify(form));
+    //when login is happening, we get the data from the server and check to see if the user is in there.
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:4000/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      })
+        if(!res.ok){
+          throw new Error('Network response was not ok');
         }
-        alert("User credentials are wrong")
+       const data = await res.json();
+       setUser(data)
+       
+    } catch (error) {
+      console.error('Error:', error);
     }
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: [e.target.value] });
-      };
-    return (
+      navigate("/");
+  };
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  return (
     <form className="form-stack contact-form" onSubmit={handleSubmit}>
       <h2>Log in</h2>
       <label htmlFor="email">email</label>
@@ -68,6 +70,6 @@ function Login(props) {
         </button>
       </div>
     </form>
-    )
+  );
 }
 export default Login;

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const initialState = {
   title: "",
   description: "",
+  userId:0
 };
 const initialIngredientState = {
   name: "",
@@ -10,7 +11,7 @@ const initialIngredientState = {
   type: "",
 };
 function RecipesAdd(props) {
-  const { recipes, setRecipes } = props;
+  const { recipes, setRecipes,user } = props;
   const navigate = useNavigate();
   const [form, setForm] = useState(initialState);
   const [ingredients, setIngredients] = useState([]);
@@ -22,7 +23,7 @@ function RecipesAdd(props) {
   };
   const handleChange = (e) => {};
   const handleIngredientChange = (e) => {
-    setIngredient({ ...ingredient, [e.target.name]: [e.target.value] });
+    setIngredient({ ...ingredient, [e.target.name]: e.target.value });
   };
 
   const handleAddIngredient = (e) => {
@@ -42,6 +43,8 @@ function RecipesAdd(props) {
   };
 
   const handleSubmit = async (event) => {
+    setForm({...form,userId:user.id})
+    console.log(form);
     event.preventDefault();
     // Here you can perform any additional actions, such as submitting the form or displaying a success message
     alert("Recipe added!");
@@ -52,9 +55,9 @@ function RecipesAdd(props) {
       },
       body: JSON.stringify(form),
     });
-    await fetch("http://localhost:4000/recipes")
-      .then((res) => res.json)
-      .then((data) => setRecipes(data));
+    // await fetch("http://localhost:4000/recipes")
+    //   .then((res) => res.json)
+    //   .then((data) => setRecipes(data));
     //refresh all recipes.
     navigate("/");
   };

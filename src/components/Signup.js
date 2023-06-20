@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const initialState = {
-  username: "",
-  password: "",
-  email: "",
+  username: '',
+  password: '',
+  email: '',
+  id:0
 };
 
 function SignUp(props) {
@@ -15,24 +16,30 @@ function SignUp(props) {
       username: "",
       password: "",
       email: "",
-      id:1
     });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:4000/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
-    setUser(form)
-    
+    try{
+      const result = await fetch("http://localhost:4000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      })
+      if(!result.ok){
+        throw new Error('Network response was not ok');
+      }
+      const data = await result.json();
+      setUser(data)
+    }catch(error){
+      console.error('Error:', error);
+    }
     navigate("/")
   };
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: [e.target.value] });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
   return (
     <form className="form-stack contact-form" onSubmit={handleSubmit}>

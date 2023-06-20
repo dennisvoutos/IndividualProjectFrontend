@@ -6,7 +6,7 @@ function RecipesView(props) {
     const [recipe,setRecipe] = useState(false)
     const params = useParams()
     useEffect(function () {
-        fetch(`http://localhost:3030/recipes/${params.id}`)
+        fetch(`http://localhost:4000/recipes/${params.id}`)
           .then((res) => res.json())
           .then((data) => setRecipe(data));
       }, []);

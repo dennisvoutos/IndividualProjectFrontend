@@ -9,7 +9,13 @@ import RecipesEdit from "./components/RecipesEdit";
 import Home from "./components/Home";
 import RecipesView from "./components/RecipesView";
 import MyRecipes from "./components/MyRecipes";
+
 export default function App() {
+  const initalUserState = {
+    username:"",
+    password:"",
+    id:1
+  }
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -43,7 +49,7 @@ export default function App() {
             <div>
               {user !== null ? (
                 <ul>
-                  <li>Logged in as: {user.username}</li>
+                  <li>Logged in as: {user.username} with id: {user.id}</li>
                 </ul>
               ) : (
                 <>
@@ -109,7 +115,7 @@ export default function App() {
           <Route path="/recipes/:id" element={<RecipesView />} />
           <Route
             path="/recipes/add"
-            element={<RecipesAdd user={user} setUser={setRecipes} setRecipes = {setRecipes}/>}
+            element={<RecipesAdd user={user} setUser={setUser} setRecipes = {setRecipes}/>}
           />
           <Route
             path="/recipes/mine/:id/edit"
