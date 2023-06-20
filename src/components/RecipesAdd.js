@@ -56,7 +56,7 @@ function RecipesAdd(props) {
       .then((res) => res.json)
       .then((data) => setRecipes(data));
     //refresh all recipes.
-    navigate("/app");
+    navigate("/");
   };
 
   return (

@@ -22,9 +22,6 @@ export default function Home(props) {
   }
   return (
     <div className="container">
-      <div>
-        <Link to="/app">Go back</Link>
-      </div>
       <div className="py-4">
         <table className="table">
           <thead>
