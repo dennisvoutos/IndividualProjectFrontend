@@ -11,3 +11,93 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* styles.css */
+
+.container {
+  margin: 20px;
+}
+
+.py-4 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table th {
+  font-weight: 700;
+}
+
+.form-stack {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.actions-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.button.blue {
+  background-color: #007bff;
+}
+
+.ClearButton {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.ClearButton:hover {
+  background-color: #f8f9fa;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+}
+.search-icon {
+  width: 20px;
+  height: 20px;
+  
+}
+.container {
+  background-color: #dadbdc ;
+}
+html, body {
+  background-color: #d9dcdf ;
+}

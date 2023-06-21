@@ -105,80 +105,96 @@ function RecipesEdit(props) {
 
   return (
     <div>
-      <h1>Create a new Recipe </h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          value={form.title}
+    <h1>Edit Recipe</h1>
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="title" className="form-label">
+        Title:
+      </label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value={form.title}
+        onChange={handleFormChange}
+        required
+        className="form-control"
+      />
+      <div>
+        <label htmlFor="description" className="form-label">
+          Description:
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          value={form.description}
           onChange={handleFormChange}
           required
+          className="form-control"
         />
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            value={form.description}
-            onChange={handleFormChange}
-            required
-          />
-        </div>
-        <h2>Ingredients:</h2>
-        <div>
-          <ul>
-            {form.ingredients.map((ingredient, index) => (
-              <li key={index}>
-                {ingredient.quantity} {ingredient.typeOfQuantity} of{" "}
-                {ingredient.name}
-                <button
-                  type="reset"
-                  onClick={removeIngredient}
-                  name={ingredient.name}
-                >
-                  {" "}
-                  Remove ingredient{" "}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <label htmlFor="ingredientName">Name:</label>
-        <input
-          type="text"
-          id="ingredientName"
-          name="name"
-          value={ingredient.name}
-          onChange={handleIngredientChange}
-        />
+      </div>
+      <h2>Ingredients:</h2>
+      <div>
+        <ul className="list-group">
+          {form.ingredients.map((ingredient, index) => (
+            <li key={index} className="list-group-item">
+              {ingredient.quantity} {ingredient.typeOfQuantity} of {ingredient.name}
+              <button
+                type="reset"
+                onClick={removeIngredient}
+                name={ingredient.name}
+                className="btn btn-danger"
+              >
+                Remove ingredient
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <label htmlFor="ingredientName" className="form-label">
+        Name:
+      </label>
+      <input
+        type="text"
+        id="ingredientName"
+        name="name"
+        value={ingredient.name}
+        onChange={handleIngredientChange}
+        className="form-control"
+      />
 
-        <label htmlFor="ingredientQuantity">Quantity:</label>
-        <input
-          type="number"
-          id="ingredientQuantity"
-          name="quantity"
-          value={ingredient.quantity}
-          onChange={handleIngredientChange}
-        />
+      <label htmlFor="ingredientQuantity" className="form-label">
+        Quantity:
+      </label>
+      <input
+        type="number"
+        id="ingredientQuantity"
+        name="quantity"
+        value={ingredient.quantity}
+        onChange={handleIngredientChange}
+        className="form-control"
+      />
 
-        <label htmlFor="ingredientTypeOfQuantity">Type of Quantity:</label>
-        <input
-          type="text"
-          id="ingredientTypeOfQuantity"
-          name="typeOfQuantity"
-          value={ingredient.typeOfQuantity}
-          onChange={handleIngredientChange}
-        />
+      <label htmlFor="ingredientTypeOfQuantity" className="form-label">
+        Type of Quantity:
+      </label>
+      <input
+        type="text"
+        id="ingredientTypeOfQuantity"
+        name="typeOfQuantity"
+        value={ingredient.typeOfQuantity}
+        onChange={handleIngredientChange}
+        className="form-control"
+      />
 
-        <button type="button" onClick={handleAddIngredient}>
-          Add Ingredient
-        </button>
+      <button type="button" onClick={handleAddIngredient} className="btn btn-primary">
+        Add Ingredient
+      </button>
 
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+      <button type="submit" className="btn btn-success">
+        Submit
+      </button>
+    </form>
+  </div>
   );
 }
 export default RecipesEdit;

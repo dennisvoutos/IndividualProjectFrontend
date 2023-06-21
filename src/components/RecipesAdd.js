@@ -1,4 +1,4 @@
-import { Button } from "bootstrap";
+
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -91,7 +91,9 @@ function RecipesAdd(props) {
     <div>
       <h1>Create a new Recipe </h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title:</label>
+        <label htmlFor="title" className="form-label">
+          Title:
+        </label>
         <input
           type="text"
           id="title"
@@ -99,60 +101,77 @@ function RecipesAdd(props) {
           value={form.title}
           onChange={handleFormChange}
           required
+          className="form-control"
         />
         <div>
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          value={form.description}
-          onChange={handleFormChange}
-          required
-        />
+          <label htmlFor="description" className="form-label">
+            Description:
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            value={form.description}
+            onChange={handleFormChange}
+            required
+            className="form-control"
+          />
         </div>
         <h2>Ingredients:</h2>
         <div>
-          <ul>
+          <ul className="list-group">
             {form.ingredients.map((ingredient, index) => (
-              <li key={index}>
-                {ingredient.quantity} {ingredient.typeOfQuantity} of {ingredient.name}<button type="reset"onClick={removeIngredient} name = {ingredient.name}> Remove ingredient </button>
+              <li key={index} className="list-group-item">
+                {ingredient.quantity} {ingredient.typeOfQuantity} of {ingredient.name}
+                <button type="reset" onClick={removeIngredient} name={ingredient.name} className="btn btn-danger">
+                  Remove ingredient
+                </button>
               </li>
-              
             ))}
           </ul>
         </div>
-        <label htmlFor="ingredientName">Name:</label>
+        <label htmlFor="ingredientName" className="form-label">
+          Name:
+        </label>
         <input
           type="text"
           id="ingredientName"
           name="name"
           value={ingredient.name}
           onChange={handleIngredientChange}
+          className="form-control"
         />
 
-        <label htmlFor="ingredientQuantity">Quantity:</label>
+        <label htmlFor="ingredientQuantity" className="form-label">
+          Quantity:
+        </label>
         <input
           type="number"
           id="ingredientQuantity"
           name="quantity"
           value={ingredient.quantity}
           onChange={handleIngredientChange}
+          className="form-control"
         />
 
-        <label htmlFor="ingredientTypeOfQuantity">Type of Quantity:</label>
+        <label htmlFor="ingredientTypeOfQuantity" className="form-label">
+          Type of Quantity:
+        </label>
         <input
           type="text"
           id="ingredientTypeOfQuantity"
           name="typeOfQuantity"
           value={ingredient.typeOfQuantity}
           onChange={handleIngredientChange}
+          className="form-control"
         />
 
-        <button type="button" onClick={handleAddIngredient}>
+        <button type="button" onClick={handleAddIngredient} className="btn btn-primary">
           Add Ingredient
         </button>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn btn-success">
+          Submit
+        </button>
       </form>
     </div>
   );

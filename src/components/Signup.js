@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const initialState = {
-  username: '',
-  password: '',
-  email: '',
-  id:0
+  username: "",
+  password: "",
+  email: "",
+  id: 0,
 };
 
 function SignUp(props) {
@@ -20,31 +20,33 @@ function SignUp(props) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const result = await fetch("http://localhost:4000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(form),
-      })
-      if(!result.ok){
-        throw new Error('Network response was not ok');
+      });
+      if (!result.ok) {
+        throw new Error("Network response was not ok");
       }
       const data = await result.json();
-      setUser(data)
-    }catch(error){
-      console.error('Error:', error);
+      setUser(data);
+    } catch (error) {
+      console.error("Error:", error);
     }
-    navigate("/")
+    navigate("/");
   };
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   return (
     <form className="form-stack contact-form" onSubmit={handleSubmit}>
-      <h2>Create User</h2>
-      <label htmlFor="email">email</label>
+      <h2 className="form-heading">Create User</h2>
+      <label htmlFor="email" className="form-label">
+        Email
+      </label>
       <input
         value={form.email}
         onChange={handleChange}
@@ -53,7 +55,9 @@ function SignUp(props) {
         type="email"
         required
       />
-      <label htmlFor="username">username</label>
+      <label htmlFor="username" className="form-label">
+        Username
+      </label>
       <input
         value={form.username}
         onChange={handleChange}
@@ -62,7 +66,9 @@ function SignUp(props) {
         type="text"
         required
       />
-      <label htmlFor="password">password</label>
+      <label htmlFor="password" className="form-label">
+        Password
+      </label>
       <input
         value={form.password}
         onChange={handleChange}
@@ -75,7 +81,7 @@ function SignUp(props) {
         <button className="button blue" type="submit">
           Sign up
         </button>
-        <button className="ClearButton" onClick={ClearForm} type = "reset">
+        <button className="ClearButton" onClick={ClearForm} type="reset">
           Clear data
         </button>
       </div>

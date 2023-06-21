@@ -43,15 +43,15 @@ export default function MyRecipes(props) {
         <tbody>
           {myRecipes.map((recipe, index) => (
             <tr>
-              <th scope="row" key={index}>
+              <th scope="row" key={index} className="recipe-index" >
                 {index + 1}
               </th>
-              <td>{recipe.title}</td>
-              <td>{recipe.description}</td>
-              <td>
+              <td className="recipe-title">{recipe.title}</td>
+              <td className="recipe-description">{recipe.description}</td>
+              <td className="recipe-ingredients">
                 <ul>
-                  {recipe.ingredients.map((ingredient) => (
-                    <li>
+                  {recipe.ingredients.map((ingredient, i) => (
+                    <li key = {i}>
                       {ingredient.quantity} {ingredient.typeOfQuantity} of{" "}
                       {ingredient.name}
                     </li>
@@ -59,13 +59,13 @@ export default function MyRecipes(props) {
                 </ul>
               </td>
               <td>
-                <Link to={`/recipes/mine/${recipe.id}/edit`}>Edit</Link>
+                <Link to={`/recipes/mine/${recipe.id}/edit`} className="edit-link">Edit</Link>
               </td>
               <td>
-                  <Link to={`http://localhost:3000/recipes/${recipe.id}`}>View</Link>
+                  <Link to={`http://localhost:3000/recipes/${recipe.id}`} className="view-link">View</Link>
                 </td>
               <td>
-                <button onClick={deleteRecipe} type="delete" id = {recipe.id}>Delete</button>
+                <button onClick={deleteRecipe} type="delete" id = {recipe.id} className="delete-button">Delete</button>
               </td>
               
             </tr>

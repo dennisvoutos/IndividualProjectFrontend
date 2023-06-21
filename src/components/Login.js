@@ -42,34 +42,40 @@ function Login(props) {
   };
   return (
     <form className="form-stack contact-form" onSubmit={handleSubmit}>
-      <h2>Log in</h2>
-      <label htmlFor="email">email</label>
-      <input
-        value={form.email}
-        onChange={handleChange}
-        id="email"
-        name="email"
-        type="email"
-        required
-      />
-      <label htmlFor="password">password</label>
-      <input
-        value={form.password}
-        onChange={handleChange}
-        id="password"
-        name="password"
-        type="text"
-        required
-      />
-      <div className="actions-section">
-        <button className="button blue" type="submit">
-          Log in
-        </button>
-        <button className="ClearButton" onClick={clearForm} type = "reset">
-          Clear data
-        </button>
-      </div>
-    </form>
+    <h2 className="form-heading">Log in</h2>
+    <label htmlFor="email" className="form-label">
+      email
+    </label>
+    <input
+      value={form.email}
+      onChange={handleChange}
+      id="email"
+      name="email"
+      type="email"
+      className="form-input"
+      required
+    />
+    <label htmlFor="password" className="form-label">
+      password
+    </label>
+    <input
+      value={form.password}
+      onChange={handleChange}
+      id="password"
+      name="password"
+      type="text"
+      className="form-input"
+      required
+    />
+    <div className="actions-section">
+      <button className="button blue" type="submit">
+        Log in
+      </button>
+      <button className="ClearButton" onClick={clearForm} type="reset">
+        Clear data
+      </button>
+    </div>
+  </form>
   );
 }
 export default Login;
