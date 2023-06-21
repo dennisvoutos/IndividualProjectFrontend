@@ -52,15 +52,16 @@ function RecipesAdd(props) {
     });
     alert("Ingredient added!");
   };
-  const removeIngredient = (e) =>{
-    const newIngredients = form.ingredients.filter((ingredient)=>ingredient.name === e.target.name)
+  const removeIngredient = (e) => {
+    const newIngredients = form.ingredients.filter(
+      (ingredient) => ingredient.name !== e.target.name
+    );
     setForm((prevForm) => ({
       ...prevForm,
-      ingredients: [newIngredients],
+      ingredients: newIngredients,
     }));
-    console.log("did it");
-    console.log(e.target);
-  }
+    setIngredients(newIngredients)
+  };
   const handleSubmit = async (event) => {
     console.log(id);
     console.log(form.ingredients);
@@ -76,9 +77,7 @@ function RecipesAdd(props) {
         },
         body: JSON.stringify(form),
       })
-      if(!res.ok){
-        throw new Error('Network response was not ok');
-      }
+      
       const data = await res.json();
       setRecipes([...recipes,data])
     } catch (error) {
@@ -114,9 +113,9 @@ function RecipesAdd(props) {
         <h2>Ingredients:</h2>
         <div>
           <ul>
-            {ingredients.map((ingredient, index) => (
+            {form.ingredients.map((ingredient, index) => (
               <li key={index}>
-                {ingredient.quantity} {ingredient.type} of {ingredient.name}<button type="reset"onClick={removeIngredient} name = {ingredient.name}> Remove ingredient </button>
+                {ingredient.quantity} {ingredient.typeOfQuantity} of {ingredient.name}<button type="reset"onClick={removeIngredient} name = {ingredient.name}> Remove ingredient </button>
               </li>
               
             ))}

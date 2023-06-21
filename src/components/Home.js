@@ -22,6 +22,11 @@ export default function Home(props) {
   }
   return (
     <div className="container">
+      <div className="search-bar">
+        <form>
+          <label placeholder="Search"><input></input></label>
+        </form>
+      </div>
       <div className="py-4">
         <table className="table">
           <thead>

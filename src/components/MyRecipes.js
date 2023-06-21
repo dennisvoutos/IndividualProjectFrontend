@@ -1,22 +1,33 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 export default function MyRecipes(props) {
+  const navigate = useNavigate()
   const { recipes, user, setRecipes } = props;
   const [myRecipes, setMyRecipes] = useState(recipes.filter((recipe)=> recipe.creator.id === user.id));
-  // useEffect((
-  //   setMyRecipes(recipes.filter((recipe)=> (recipe.creator.id === user.id)))
-  // ),[myRecipes]);
+  useEffect(() => {
+    setMyRecipes(recipes.filter((recipe) => recipe.creator.id === user.id));
+  }, [recipes, user]);
 
   const deleteRecipe = async (e) => {
-    const newRecipes = myRecipes.filter((item) => item.id !== e.target.id);
-    setMyRecipes(newRecipes);
-    const res = fetch("http://localhost:4000/recipes/" + [e.target.id], {
+  const recipeId = e.target.id;
+
+  const newRecipes = myRecipes.filter((recipe) => recipe.id !== recipeId);
+  setMyRecipes(newRecipes);
+
+  try {
+    await fetch(`http://localhost:4000/recipes/${recipeId}`, {
       method: "DELETE",
     });
-    await fetch("http://localhost:4000/recipes")
-      .then((res) => res.json())
-      .then((data) => setRecipes(data));
-  };
+
+    const res = await fetch("http://localhost:4000/recipes");
+    const data = await res.json();
+    setRecipes(data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+
+  navigate("/recipes/mine");
+};
 
   return (
     <div className="py-4">
@@ -48,11 +59,15 @@ export default function MyRecipes(props) {
                 </ul>
               </td>
               <td>
-                <Link to="/recipes/mine/:id/edit">Edit</Link>
+                <Link to={`/recipes/mine/${recipe.id}/edit`}>Edit</Link>
               </td>
               <td>
-                <button onClick={deleteRecipe}>Delete</button>
+                  <Link to={`http://localhost:3000/recipes/${recipe.id}`}>View</Link>
+                </td>
+              <td>
+                <button onClick={deleteRecipe} type="delete" id = {recipe.id}>Delete</button>
               </td>
+              
             </tr>
           ))}
         </tbody>
