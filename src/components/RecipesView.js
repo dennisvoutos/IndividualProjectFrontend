@@ -8,7 +8,7 @@ function RecipesView(props) {
     useEffect(function () {
         fetch(`http://localhost:4000/recipes/${params.id}`)
           .then((res) => res.json())
-          .then((data) => setRecipe(data));
+          .then((data) => {setRecipe(data); console.log(data)});
       }, []);
     if(!recipe){
         return(
@@ -18,11 +18,11 @@ function RecipesView(props) {
     return (
         <div>
           <h2>{recipe.title}</h2>
-          <p>recipe.description</p>
+          <p>{recipe.description}</p>
           <div>
             <ul>
                 {recipe.ingredients.map((ingredient)=>(
-                    <li>{ingredient.quantity} {ingredient.typeOfQUantity} of {ingredient.name}</li>
+                    <li>{ingredient.quantity} {ingredient.typeOfQuantity} of {ingredient.name}</li>
                 ))}
             </ul>
           </div>

@@ -75,7 +75,7 @@ function SignUp(props) {
         <button className="button blue" type="submit">
           Sign up
         </button>
-        <button className="ClearButton" onClick={ClearForm}>
+        <button className="ClearButton" onClick={ClearForm} type = "reset">
           Clear data
         </button>
       </div>

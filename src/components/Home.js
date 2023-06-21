@@ -36,17 +36,26 @@ export default function Home(props) {
           </thead>
           <tbody>
             {recipes.map((recipe, index) => (
-              <tr>
+              <tr key={index}>
                 <th scope="row" key={index}>
                   {index + 1}
                 </th>
                 <td>{recipe.title}</td>
                 <td>{recipe.description}</td>
                 <td>
-                  {recipe.ingredients.map((ingredient)=>(ingredient.quantity + ingredient.type + "of " + ingredient.name))}
+                  <ul>
+                    {recipe.ingredients.map((ingredient) => (
+                      <li>
+                        {ingredient.quantity} {ingredient.typeOfQuantity} of{" "}
+                        {ingredient.name}
+                      </li>
+                    ))}
+                  </ul>
                 </td>
                 <td>{recipe.creator.username}</td>
-                <td><Link to ="recipes/:[recipe.id]">View</Link></td>
+                <td>
+                  <Link to={`recipes/${recipe.id}`}>View</Link>
+                </td>
               </tr>
             ))}
           </tbody>

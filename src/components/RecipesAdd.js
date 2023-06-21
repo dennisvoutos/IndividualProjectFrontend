@@ -1,23 +1,24 @@
+import { Button } from "bootstrap";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const initialIngredientState = {
   name: "",
   quantity: "",
-  type: "",
-  ingredients:[]
+  typeOfQuantity: "",
 };
 
 function RecipesAdd(props) {
-  const { recipes, setRecipes,id } = props;
+  const { recipes, setRecipes, id } = props;
   const [form, setForm] = useState({
     title: "",
     description: "",
-    userId:0,
-    ingredients:[]
+    userId: 0,
+    ingredients: [],
   });
- 
- 
+  useEffect(() => {
+    setForm((prevForm) => ({ ...prevForm, userId: id }));
+  }, []);
   const navigate = useNavigate();
 
   const [ingredients, setIngredients] = useState([]);
@@ -27,7 +28,7 @@ function RecipesAdd(props) {
     setForm({ ...form, [e.target.name]: e.target.value });
     console.log(e);
   };
-  
+
   const handleIngredientChange = (e) => {
     setIngredient({ ...ingredient, [e.target.name]: e.target.value });
   };
@@ -36,7 +37,7 @@ function RecipesAdd(props) {
     const newIngredient = {
       name: ingredient.name,
       quantity: ingredient.quantity,
-      type: ingredient.type,
+      typeOfQuantity: ingredient.typeOfQuantity,
     };
     //here i have 2 options. post the ingredients in the server and use their id in the POST of the recipe, or try to see if i can post them all together.
     setIngredients([...ingredients, newIngredient]);
@@ -47,38 +48,49 @@ function RecipesAdd(props) {
     setIngredient({
       name: "",
       quantity: "",
-      type: "",
+      typeOfQuantity: "",
     });
     alert("Ingredient added!");
   };
-
+  const removeIngredient = (e) =>{
+    const newIngredients = form.ingredients.filter((ingredient)=>ingredient.name === e.target.name)
+    setForm((prevForm) => ({
+      ...prevForm,
+      ingredients: [newIngredients],
+    }));
+    console.log("did it");
+    console.log(e.target);
+  }
   const handleSubmit = async (event) => {
     console.log(id);
     console.log(form.ingredients);
-    setForm(prevForm => ({ ...prevForm, userId: id}));
-    console.log(form);
     event.preventDefault();
     // Here you can perform any additional actions, such as submitting the form or displaying a success message
-    
-    const res = fetch("http://localhost:4000/recipes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-    .then
-    await fetch("http://localhost:4000/recipes")
-      .then((res) => res.json())
-      .then((data) => setRecipes(data));
-    // refresh all recipes.
-    alert("Recipe added!");
+    setForm((prevForm) => ({ ...prevForm, userId: {id} }));
+    console.log(form);
+    try {
+      const res = fetch("http://localhost:4000/recipes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      })
+      if(!res.ok){
+        throw new Error('Network response was not ok');
+      }
+      const data = await res.json();
+      setRecipes([...recipes,data])
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    alert("Recipe added!")
     navigate("/");
   };
 
   return (
     <div>
-      <h1>Create Recipe for user {id}</h1>
+      <h1>Create a new Recipe </h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title:</label>
         <input
@@ -89,7 +101,7 @@ function RecipesAdd(props) {
           onChange={handleFormChange}
           required
         />
-
+        <div>
         <label htmlFor="description">Description:</label>
         <textarea
           id="description"
@@ -98,14 +110,15 @@ function RecipesAdd(props) {
           onChange={handleFormChange}
           required
         />
-
+        </div>
         <h2>Ingredients:</h2>
         <div>
           <ul>
             {ingredients.map((ingredient, index) => (
               <li key={index}>
-                {ingredient.quantity} {ingredient.type} of {ingredient.name}
+                {ingredient.quantity} {ingredient.type} of {ingredient.name}<button type="reset"onClick={removeIngredient} name = {ingredient.name}> Remove ingredient </button>
               </li>
+              
             ))}
           </ul>
         </div>
@@ -120,7 +133,7 @@ function RecipesAdd(props) {
 
         <label htmlFor="ingredientQuantity">Quantity:</label>
         <input
-          type="text"
+          type="number"
           id="ingredientQuantity"
           name="quantity"
           value={ingredient.quantity}
@@ -131,8 +144,8 @@ function RecipesAdd(props) {
         <input
           type="text"
           id="ingredientTypeOfQuantity"
-          name="type"
-          value={ingredient.type}
+          name="typeOfQuantity"
+          value={ingredient.typeOfQuantity}
           onChange={handleIngredientChange}
         />
 
