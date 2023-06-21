@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 export default function Home(props) {
+  const handleSearch = (e) =>{
+    setSearchbar(e.target.value)
+  }
+  const handleSubmit = async (e) =>{
+    navigate(`/search/${searchbar}`)
+  }
   const navigate = useNavigate();
   // const [recipes,setRecipes] = useState([])
   const { recipes, setRecipes, user, setuser } = props;
   const [isLoaded, setIsLoaded] = useState(false);
+  const [searchbar,setSearchbar] = useState();
   useEffect(() => {
     loadRecipes();
   }, []);
@@ -23,8 +30,16 @@ export default function Home(props) {
   return (
     <div className="container">
       <div className="search-bar">
-        <form>
-          <label placeholder="Search"><input></input></label>
+        <form onSubmit={handleSubmit}>
+          <label placeholder="Search">
+            <input
+              type="text"
+              id="searchBar"
+              name="searchBar"
+              value={searchbar}
+              onChange={handleSearch}></input>
+              <button type = "submit">Search</button>
+          </label>
         </form>
       </div>
       <div className="py-4">

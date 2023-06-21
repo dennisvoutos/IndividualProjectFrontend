@@ -9,7 +9,7 @@ import RecipesEdit from "./components/RecipesEdit";
 import Home from "./components/Home";
 import RecipesView from "./components/RecipesView";
 import MyRecipes from "./components/MyRecipes";
-
+import Search from "./components/Search";
 export default function App() {
   const initalUserState = {
     username:"",
@@ -49,7 +49,7 @@ export default function App() {
             <div>
               {user !== null ? (
                 <ul>
-                  <li>Logged in as: {user.username} with id: {user.id}</li>
+                  <li>Logged in as: {user.username} </li>
                 </ul>
               ) : (
                 <>
@@ -149,6 +149,16 @@ export default function App() {
             path="/recipes/mine"
             element={
               <MyRecipes
+                user={user}
+                setRecipes={setRecipes}
+                recipes={recipes}
+              />
+            }
+          />
+          <Route
+            path="/search/:prompt"
+            element={
+              <Search
                 user={user}
                 setRecipes={setRecipes}
                 recipes={recipes}
